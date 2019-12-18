@@ -1,18 +1,29 @@
 package com.bridgelabz.demo.utility
 
-import org.modelmapper.ModelMapper
-import org.springframework.context.annotation.Bean
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import io.jsonwebtoken.Claims
+import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.SignatureAlgorithm
+import org.springframework.mail.SimpleMailMessage
 import org.springframework.stereotype.Component
 
 @Component
 class Utility {
-    @Bean
-    fun getMapper():ModelMapper{
-        return ModelMapper()
+    fun createToken(customerId : Int):String{
+        var token : String = Jwts.builder().setSubject(customerId.toString()).signWith(SignatureAlgorithm.HS256,"userId").compact();
+        return token
     }
-    @Bean
-    fun getPasswordEncoder(): BCryptPasswordEncoder {
-        return BCryptPasswordEncoder()
+    fun getIdFromToken(token : String) : Int{
+        var claims : Claims = Jwts.parser().setSigningKey("userId").parseClaimsJws(token).body
+        return claims.subject.toInt()
+    }
+    fun getMessage(token : String) : SimpleMailMessage {
+        var message = SimpleMailMessage()
+        message.setText("Registration Successful")
+        return message
+    }
+    fun getMessageForgotPassword(token: String) : SimpleMailMessage {
+        var message = SimpleMailMessage()
+        message.setText("Response to your forgot password\nhttp://localhost:8080/resetpassword/$token")
+        return message
     }
 }

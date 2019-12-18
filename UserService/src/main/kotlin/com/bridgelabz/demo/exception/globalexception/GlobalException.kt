@@ -10,21 +10,21 @@ import java.lang.Exception
 
 @RestControllerAdvice
 class GlobalException {
-//    @ExceptionHandler(Exception::class)
-//    fun globalException(e:Exception):Response{
-//        return Response(200,"Internal Server Error",null)
-//    }
+    @ExceptionHandler(Exception :: class)
+    fun globalException(e : Exception) : Response{
+        return Response(200,"Internal Server Error",null)
+    }
 
-    @ExceptionHandler(UserAlreadyAvailable::class)
-    fun userAlreadyAvailable(e:UserAlreadyAvailable):Response{
+    @ExceptionHandler(UserAlreadyAvailable :: class)
+    fun userAlreadyAvailable(e : UserAlreadyAvailable) : Response{
         return Response(200,"EmailId already registered",null)
     }
-    @ExceptionHandler(UserNotFound::class)
-    fun userAlreadyAvailable(e:UserNotFound):Response{
+    @ExceptionHandler(UserNotFound :: class)
+    fun userAlreadyAvailable(e : UserNotFound) : Response{
         return Response(200,"EmailId not registered",null)
     }
-    @ExceptionHandler(IncorrectPassword::class)
-    fun userAlreadyAvailable(e:IncorrectPassword):Response{
+    @ExceptionHandler(IncorrectPassword :: class)
+    fun userAlreadyAvailable(e : IncorrectPassword) : Response{
         return Response(200,"Password entered is wrong",null)
     }
 }
